@@ -4,17 +4,34 @@ using UnityEngine;
 
 public class Player_Abilities : MonoBehaviour
 {
-	[SerializeField]
-	private float boomerangCooldown = 9; // Time you must wait after using the boomerang
-	[SerializeField]
-	private bool canBoomerang = true;
 
+	[Header("Sword")]
 	[SerializeField]
 	private float swordCooldown = 0.6f; // Time you must wait after using the sword
 	[SerializeField]
 	private bool canSword = true;
+	[SerializeField]
+	private Transform swordSpawn; // Where the sword object will be placed
+	[SerializeField]
+	private GameObject swordrefab; // The actual sword object
 
-	private Coroutine resetBoomerang;
+	[Header("Boomerang")]
+	[SerializeField]
+	private float boomerangCooldown = 9; // Time you must wait after using the boomerang
+	[SerializeField]
+	private bool canBoomerang = true;
+	[SerializeField]
+	private Transform boomerangSpawn; // Where the boomerang is spawned
+	[SerializeField]
+	private GameObject boomerangPrefab; // The actual boomerang projectile
+
+	[Header("Dash")]
+	[SerializeField]
+	private float dashCooldown = 0.4f; // Time you must wait after using the sword
+	[SerializeField]
+	private bool canDash = true;
+
+	private Coroutine resetBoomerang; // The stored coroutine call that can be cancelled later when the boomerang is caught
 
 	// Use this for initialization
 	void Start ()
