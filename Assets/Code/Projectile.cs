@@ -37,8 +37,8 @@ public class Projectile : MonoBehaviour
 	{
 		this.dir = dir;
 		// Factor direction into acceleration and velocity
-		vel *= dir;
-		accel *= dir;
+		vel = new Vector2(vel.x * dir, vel.y);
+		accel = new Vector2(accel.x * dir, accel.y);
 	}
 
 	public void SetAddedVel(Vector2 addedVel)
