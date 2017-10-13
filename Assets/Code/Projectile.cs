@@ -45,4 +45,12 @@ public class Projectile : MonoBehaviour
 	{
 		vel += addedVel;
 	}
+
+	protected virtual void OnTriggerStay2D(Collider2D other)
+	{
+		Debug.LogError("YP");
+		// Prevents any interaction with other projectiles
+		if (other.tag != "Projectile")
+			Destroy(gameObject);
+	}
 }

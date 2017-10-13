@@ -26,6 +26,7 @@ public class Player_Abilities : MonoBehaviour
 	private GameObject boomerangPrefab; // The actual boomerang projectile
 	[SerializeField]
 	private float boomerangSpeedInher = 0.75f; // How much of the player's speed is applied to the boomerang initially
+	// TODO: FIX AWKWARD BOOMERANG THROWS AS PLAYER IS STARTING TO SPEED UP
 
 	[Header("Dash")]
 	[SerializeField]

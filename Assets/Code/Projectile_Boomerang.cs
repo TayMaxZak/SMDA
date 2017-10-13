@@ -12,7 +12,7 @@ public class Projectile_Boomerang : Projectile
 	private float spinSpeed = 90; // How much to rotate every second
 	private Vector3 spinV;
 
-	private float gracePeriod = 0.25f; // How long until the boomerang can be caught by the player (prevents awkward bugs)
+	private float gracePeriod = 0.33f; // How long until the boomerang can be caught by the player (prevents awkward bugs)
 	private bool canCatch = false;
 
 	private float lifetime = 8f; // Will be automoatically destroyed after this time
@@ -38,17 +38,28 @@ public class Projectile_Boomerang : Projectile
 		canCatch = true;
 	}
 
-	void OnTriggerEnter2D(Collider2D other)
+	/**/
+	protected override void OnTriggerStay2D(Collider2D other)
 	{
-		if (other.tag == "Player")
+		// Prevents any interaction with other projectiles
+		if (other.tag != "Projectile")
 		{
-			if (canCatch)
+			// Can be caught by the player to reset boomerang cooldown
+			if (other.tag == "Player")
 			{
-				other.GetComponent<Player_Abilities>().CatchBoomerang();
+				// Only do this after a quarter of a second to avoid instantly catching what you just threw
+				if (canCatch)
+				{
+					other.GetComponent<Player_Abilities>().CatchBoomerang();
+					Destroy(gameObject);
+				}
+			}
+			else
+			{
+				// Hits some unspecified object
 				Destroy(gameObject);
 			}
-		}
-		else
-			Destroy(gameObject);
+		} // if projectile
 	}
+	/**/
 }
