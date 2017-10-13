@@ -24,6 +24,8 @@ public class Player_Abilities : MonoBehaviour
 	private Transform boomerangSpawn; // Where the boomerang is spawned
 	[SerializeField]
 	private GameObject boomerangPrefab; // The actual boomerang projectile
+	[SerializeField]
+	private float boomerangSpeedInher = 0.75f; // How much of the player's speed is applied to the boomerang initially
 
 	[Header("Dash")]
 	[SerializeField]
@@ -33,10 +35,12 @@ public class Player_Abilities : MonoBehaviour
 
 	private Coroutine resetBoomerang; // The stored coroutine call that can be cancelled later when the boomerang is caught
 
+	private Rigidbody2D rigid;
+
 	// Use this for initialization
 	void Start ()
 	{
-		
+		rigid = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
@@ -87,7 +91,16 @@ public class Player_Abilities : MonoBehaviour
 		if (!canBoomerang)
 			return;
 
-		Debug.Log("Boomerang noise!");
+		////Debug.Log("Boomerang noise!");
+
+		// Spawn boomerang
+		GameObject newBoomerang = Instantiate(boomerangPrefab, boomerangSpawn.position, Quaternion.identity);
+
+		Projectile_Boomerang newBoom = newBoomerang.GetComponent<Projectile_Boomerang>();
+		newBoom.SetDir((int)Mathf.Sign(transform.localScale.x));
+		newBoom.SetAddedVel(new Vector2(rigid.velocity.x * boomerangSpeedInher, 0));
+
+
 
 		resetBoomerang = StartCoroutine(ResetBoomerang());
 		canBoomerang = false;
