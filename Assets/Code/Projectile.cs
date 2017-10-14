@@ -14,6 +14,8 @@ public class Projectile : MonoBehaviour
 	private Vector2 accel;
 	//[SerializeField]
 	private Rigidbody2D rigid;
+	[SerializeField]
+	private AudioSource hitAudio;
 
 	// Use this for initialization
 	// Note: this MUST be awake
@@ -51,6 +53,8 @@ public class Projectile : MonoBehaviour
 		Debug.LogError("YP");
 		// Prevents any interaction with other projectiles
 		if (other.tag != "Projectile")
+		{
 			Destroy(gameObject);
+		}
 	}
 }

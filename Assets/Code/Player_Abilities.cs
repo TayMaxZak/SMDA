@@ -103,16 +103,10 @@ public class Player_Abilities : MonoBehaviour
 		int dir = (int)Mathf.Sign(transform.localScale.x);
 		newBoom.SetDir(dir);
 
+		// If the player is moving we want to add a bit of initial velocity
 		////newBoom.SetAddedVel(new Vector2(rigid.velocity.x * boomerangSpeedInher, 0));
 		if (control.IsMoving())
-		{
-			Debug.Log("Moving!");
 			newBoom.SetAddedVel(new Vector2(dir * control.GetMaxSpeed() * boomerangSpeedInher, 0));
-		}
-		else
-		{
-			Debug.Log("Not moving!");
-		}
 
 
 		resetBoomerang = StartCoroutine(ResetBoomerang());
@@ -124,14 +118,14 @@ public class Player_Abilities : MonoBehaviour
 	{
 		yield return new WaitForSeconds(boomerangCooldown);
 
-		Debug.Log("Boomerang ready!");
+		////Debug.Log("Boomerang ready!");
 		canBoomerang = true;
 	}
 
 	// Called when a boomerang hits the player
 	public void CatchBoomerang()
 	{
-		Debug.Log("Gotta catch em all!");
+		////Debug.Log("Gotta catch em all!");
 		if (resetBoomerang != null)
 			StopCoroutine(resetBoomerang);
 		canBoomerang = true;
