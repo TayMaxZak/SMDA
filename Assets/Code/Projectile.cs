@@ -15,7 +15,13 @@ public class Projectile : MonoBehaviour
 	//[SerializeField]
 	private Rigidbody2D rigid;
 	[SerializeField]
-	private AudioSource hitAudio;
+	protected AudioClip hitAudio;
+	[SerializeField]
+	protected AudioSource hitSource;
+	[SerializeField]
+	protected GameObject hitEffect;
+
+	protected bool broken;
 
 	// Use this for initialization
 	// Note: this MUST be awake
@@ -23,6 +29,7 @@ public class Projectile : MonoBehaviour
 	{
 		// Cache rigidbody
 		rigid = gameObject.GetComponent<Rigidbody2D>();
+		//hitSource = gameObject.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -54,6 +61,10 @@ public class Projectile : MonoBehaviour
 		// Prevents any interaction with other projectiles
 		if (other.tag != "Projectile")
 		{
+			if (!broken)
+				AudioUtils.PlayClipAt(hitAudio, transform.position, hitSource);
+			broken = true;
+			Instantiate(hitEffect, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
 	}
