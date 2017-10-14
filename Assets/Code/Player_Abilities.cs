@@ -37,11 +37,13 @@ public class Player_Abilities : MonoBehaviour
 	private Coroutine resetBoomerang; // The stored coroutine call that can be cancelled later when the boomerang is caught
 
 	private Rigidbody2D rigid;
+	private Player_Controller control;
 
 	// Use this for initialization
 	void Start ()
 	{
 		rigid = GetComponent<Rigidbody2D>();
+		control = GetComponent<Player_Controller>();
 	}
 	
 	// Update is called once per frame
@@ -98,9 +100,19 @@ public class Player_Abilities : MonoBehaviour
 		GameObject newBoomerang = Instantiate(boomerangPrefab, boomerangSpawn.position, Quaternion.identity);
 
 		Projectile_Boomerang newBoom = newBoomerang.GetComponent<Projectile_Boomerang>();
-		newBoom.SetDir((int)Mathf.Sign(transform.localScale.x));
-		newBoom.SetAddedVel(new Vector2(rigid.velocity.x * boomerangSpeedInher, 0));
+		int dir = (int)Mathf.Sign(transform.localScale.x);
+		newBoom.SetDir(dir);
 
+		////newBoom.SetAddedVel(new Vector2(rigid.velocity.x * boomerangSpeedInher, 0));
+		if (control.IsMoving())
+		{
+			Debug.Log("Moving!");
+			newBoom.SetAddedVel(new Vector2(dir * control.GetMaxSpeed() * boomerangSpeedInher, 0));
+		}
+		else
+		{
+			Debug.Log("Not moving!");
+		}
 
 
 		resetBoomerang = StartCoroutine(ResetBoomerang());
