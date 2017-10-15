@@ -42,6 +42,7 @@ public static class AudioUtils {
 		aSource.rolloffMode = reference.rolloffMode;
 		aSource.dopplerLevel = reference.dopplerLevel;
 		aSource.pitch = reference.pitch;
+		aSource.volume = reference.volume;
 		aSource.outputAudioMixerGroup = reference.outputAudioMixerGroup;
 		aSource.Play(); // start the sound
 		MonoBehaviour.Destroy(tempGO, clip.length); // destroy object after clip duration

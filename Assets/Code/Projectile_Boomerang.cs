@@ -39,7 +39,7 @@ public class Projectile_Boomerang : Projectile
 	}
 
 	/**/
-	protected override void OnTriggerStay2D(Collider2D other)
+	protected override void OnTriggerEnter2D(Collider2D other)
 	{
 		// Prevents any interaction with other projectiles
 		if (other.tag != "Projectile")
@@ -57,10 +57,12 @@ public class Projectile_Boomerang : Projectile
 			else
 			{
 				// Hits some unspecified object
-				if (!broken)
-					AudioUtils.PlayClipAt(hitAudio, transform.position, hitSource);
+				if (broken)
+					return;
 				broken = true;
+
 				Instantiate(hitEffect, transform.position, Quaternion.identity);
+				AudioUtils.PlayClipAt(hitAudio, transform.position, hitSource);
 				Destroy(gameObject);
 			}
 		} // if projectile

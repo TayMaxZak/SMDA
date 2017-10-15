@@ -55,7 +55,7 @@ public class Projectile : MonoBehaviour
 		vel += addedVel;
 	}
 
-	protected virtual void OnTriggerStay2D(Collider2D other)
+	protected virtual void OnTriggerEnter2D(Collider2D other)
 	{
 		Debug.LogError("YP");
 		// Prevents any interaction with other projectiles

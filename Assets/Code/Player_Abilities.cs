@@ -11,9 +11,10 @@ public class Player_Abilities : MonoBehaviour
 	[SerializeField]
 	private bool canSword = true;
 	[SerializeField]
-	private Transform swordSpawn; // Where the sword object will be placed
+	private Melee swordTrigger; // The actual boomerang projectile
 	[SerializeField]
-	private GameObject swordrefab; // The actual sword object
+	private float swordDmg = 1f;
+	private float swordLife = 0.15f; // How long the melee trigger lasts
 
 	[Header("Boomerang")]
 	[SerializeField]
@@ -26,11 +27,10 @@ public class Player_Abilities : MonoBehaviour
 	private GameObject boomerangPrefab; // The actual boomerang projectile
 	[SerializeField]
 	private float boomerangSpeedInher = 0.75f; // How much of the player's speed is applied to the boomerang initially
-	// TODO: FIX AWKWARD BOOMERANG THROWS AS PLAYER IS STARTING TO SPEED UP
 
 	[Header("Dash")]
 	[SerializeField]
-	private float dashCooldown = 0.4f; // Time you must wait after using the sword
+	private float dashCooldown = 0.4f; // Time you must wait after using the dash
 	[SerializeField]
 	private bool canDash = true;
 
@@ -44,6 +44,8 @@ public class Player_Abilities : MonoBehaviour
 	{
 		rigid = GetComponent<Rigidbody2D>();
 		control = GetComponent<Player_Controller>();
+
+		swordTrigger.SetDmg(swordDmg);
 	}
 	
 	// Update is called once per frame
@@ -74,10 +76,12 @@ public class Player_Abilities : MonoBehaviour
 		if (!canSword)
 			return;
 
-		Debug.Log("Swoosh!");
-
-		StartCoroutine(ResetSword());
+		////Debug.Log("Swoosh!");
 		canSword = false;
+		StartCoroutine(ResetSword());
+
+		swordTrigger.Enable();
+		StartCoroutine(DisableSword());
 	}
 
 	// Resets sword after a cooldown period
@@ -85,8 +89,16 @@ public class Player_Abilities : MonoBehaviour
 	{
 		yield return new WaitForSeconds(swordCooldown);
 
-		Debug.Log("Sword ready!");
+		////Debug.Log("Sword ready!");
 		canSword = true;
+	}
+
+	// Disables sword trigger after a period
+	IEnumerator DisableSword()
+	{
+		yield return new WaitForSeconds(swordLife);
+
+		swordTrigger.Disable();
 	}
 
 	void UseBoomerang()

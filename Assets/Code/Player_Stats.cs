@@ -1,8 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_Stats : MonoBehaviour
+public interface Damageable
+{
+	void TakeDamage(float dmg); // Subtracts dmg from the object on which this is called
+}
+
+public class Player_Stats : MonoBehaviour, Damageable
 {
 	[Header("Health")]
 	[SerializeField]
@@ -16,6 +22,8 @@ public class Player_Stats : MonoBehaviour
 	[SerializeField]
 	private float curMana; // Actual current mana
 
+
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -27,5 +35,10 @@ public class Player_Stats : MonoBehaviour
 	void Update ()
 	{
 		
+	}
+
+	public void TakeDamage(float dmg)
+	{
+		curHealth -= dmg;
 	}
 }
