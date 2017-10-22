@@ -22,7 +22,7 @@ public class Player_Stats : MonoBehaviour, Damageable
 	[SerializeField]
 	private float curMana; // Actual current mana
 
-
+	public static float MANA_SEGMENT = 3f;
 
 	// Use this for initialization
 	void Start ()
@@ -40,5 +40,36 @@ public class Player_Stats : MonoBehaviour, Damageable
 	public void TakeDamage(float dmg)
 	{
 		curHealth -= dmg;
+	}
+
+	public bool UseMana()
+	{
+		return UseMana(MANA_SEGMENT);
+	}
+
+	public bool UseMana(float howMuch)
+	{
+		bool hasEnough = CheckMana(howMuch);
+		if (hasEnough)
+		{
+			curMana = curMana - howMuch;
+		}
+		return hasEnough;
+	}
+
+	public bool CheckMana()
+	{
+		return CheckMana(MANA_SEGMENT);
+	}
+
+	public bool CheckMana(float howMuch)
+	{
+		float newMana = curMana - howMuch;
+		if (newMana >= -0.01)
+		{
+			return true;
+		}
+		else
+			return false;
 	}
 }
