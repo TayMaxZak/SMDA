@@ -42,7 +42,7 @@ public class Projectile_Boomerang : Projectile
 	protected override void OnTriggerEnter2D(Collider2D other)
 	{
 		// Prevents any interaction with other projectiles
-		if (other.tag != "Projectile")
+		if (other.tag != "Projectile" && other.tag != "Melee")
 		{
 			// Can be caught by the player to reset boomerang cooldown
 			if (other.tag == "Player")

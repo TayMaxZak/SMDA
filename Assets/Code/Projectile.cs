@@ -59,7 +59,7 @@ public class Projectile : MonoBehaviour
 	{
 		Debug.LogError("YP");
 		// Prevents any interaction with other projectiles
-		if (other.tag != "Projectile")
+		if (other.tag != "Projectile" && other.tag != "Melee")
 		{
 			if (!broken)
 				AudioUtils.PlayClipAt(hitAudio, transform.position, hitSource);

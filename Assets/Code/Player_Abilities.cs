@@ -212,7 +212,6 @@ public class Player_Abilities : MonoBehaviour
 		// 1 because of player collider
 		if (hit.Length > 1)
 		{
-			Debug.Log(hit.Length);
 			return false;
 		}
 		else
