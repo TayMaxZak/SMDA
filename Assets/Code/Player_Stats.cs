@@ -12,7 +12,7 @@ public class Player_Stats : MonoBehaviour, Damageable
 {
 	[Header("Health")]
 	[SerializeField]
-	private float maxHealth = 3f; // Maximum health the player can have
+	private float maxHealth = 6f; // Maximum health the player can have. 3 hearts, 2 halves each
 	[SerializeField]
 	private float curHealth; // Actual current health
 
@@ -23,12 +23,16 @@ public class Player_Stats : MonoBehaviour, Damageable
 	private float curMana; // Actual current mana
 
 	public static float MANA_SEGMENT = 3f;
+	private static float MARGIN = 0.0001f;
 
 	// Use this for initialization
 	void Start ()
 	{
-		curHealth = maxHealth;
-		curMana = maxMana;
+		////curHealth = maxHealth;
+		// Temp code
+		curHealth = maxHealth - 4;
+		// Mana should not start full
+		//curMana = maxMana;
 	}
 	
 	// Update is called once per frame
@@ -40,6 +44,38 @@ public class Player_Stats : MonoBehaviour, Damageable
 	public void TakeDamage(float dmg)
 	{
 		curHealth -= dmg;
+		// TODO: DYING
+	}
+
+	// Returns false if failed to add health
+	public bool AddHealth(float howMuch)
+	{
+		float newHealth = curHealth + howMuch;
+		if (newHealth >= maxHealth + MARGIN)
+		{
+			return false;
+		}
+		else
+		{
+			////Debug.Log("newHealth = " + newHealth + ", maxHealth + MARGIN = " + (maxHealth + MARGIN));
+			curHealth = newHealth;
+			return true;
+		}
+	}
+
+	// MANA //
+
+	// Returns false if failed to add mana
+	public bool AddMana(float howMuch)
+	{
+		float newMana = curMana + howMuch;
+		if (newMana >= maxMana + MARGIN)
+			return false;
+		else
+		{
+			curMana = newMana;
+			return true;
+		}
 	}
 
 	public bool UseMana()
@@ -65,11 +101,13 @@ public class Player_Stats : MonoBehaviour, Damageable
 	public bool CheckMana(float howMuch)
 	{
 		float newMana = curMana - howMuch;
-		if (newMana >= -0.01)
+		if (newMana >= -MARGIN)
 		{
 			return true;
 		}
 		else
 			return false;
 	}
+
+
 }

@@ -57,15 +57,10 @@ public class Projectile_Boomerang : Projectile
 			else
 			{
 				// Hits some unspecified object
-				if (broken)
-					return;
-				broken = true;
-
-				Instantiate(hitEffect, transform.position, Quaternion.identity);
-				AudioUtils.PlayClipAt(hitAudio, transform.position, hitSource);
-				Destroy(gameObject);
+				Break();
 			}
 		} // if projectile
 	}
 	/**/
+
 }

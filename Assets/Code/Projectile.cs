@@ -57,15 +57,22 @@ public class Projectile : MonoBehaviour
 
 	protected virtual void OnTriggerEnter2D(Collider2D other)
 	{
-		Debug.LogError("YP");
 		// Prevents any interaction with other projectiles
 		if (other.tag != "Projectile" && other.tag != "Melee")
 		{
-			if (!broken)
-				AudioUtils.PlayClipAt(hitAudio, transform.position, hitSource);
-			broken = true;
-			Instantiate(hitEffect, transform.position, Quaternion.identity);
-			Destroy(gameObject);
+			Break();
 		}
+	}
+
+
+	protected void Break()
+	{
+		if (broken)
+			return;
+		broken = true;
+
+		Instantiate(hitEffect, transform.position, Quaternion.identity);
+		AudioUtils.PlayClipAt(hitAudio, transform.position, hitSource);
+		Destroy(gameObject);
 	}
 }

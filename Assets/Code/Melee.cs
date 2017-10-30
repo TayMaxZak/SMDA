@@ -48,6 +48,9 @@ public class Melee : MonoBehaviour
 		if (targets.Contains(target))
 			return;
 
+		if ((Player_Stats)target != null)
+			return;
+
 		target.TakeDamage(dmg);
 		targets.Add(target);
 		AudioUtils.PlayClipAt(cutAudio, transform.position, swingSource);
