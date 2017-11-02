@@ -56,7 +56,7 @@ public class Player_Abilities : MonoBehaviour
 	private float dashBufferY = 0.15f; // Additional buffer added to make the player doesn't clip at all
 
 	[Header("TEST")]
-	[SerializeField]
+	//[SerializeField]
 	private GameObject indicator; // TEST
 
 

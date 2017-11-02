@@ -25,6 +25,9 @@ public class Player_Stats : MonoBehaviour, Damageable
 	public static float MANA_SEGMENT = 3f;
 	private static float MARGIN = 0.0001f;
 
+	[SerializeField]
+	private Player_Interface ui;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -33,18 +36,24 @@ public class Player_Stats : MonoBehaviour, Damageable
 		curHealth = maxHealth - 4;
 		// Mana should not start full
 		//curMana = maxMana;
+
+		UpdateUI();
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void UpdateUI()
 	{
-		
+		ui.UpdateHealth(curHealth);
+		ui.UpdateMana(curMana);
+		Debug.Log("updated!");
 	}
 
 	public void TakeDamage(float dmg)
 	{
 		curHealth -= dmg;
 		// TODO: DYING
+
+		UpdateUI();
 	}
 
 	// Returns false if failed to add health
@@ -59,6 +68,8 @@ public class Player_Stats : MonoBehaviour, Damageable
 		{
 			////Debug.Log("newHealth = " + newHealth + ", maxHealth + MARGIN = " + (maxHealth + MARGIN));
 			curHealth = newHealth;
+
+			UpdateUI();
 			return true;
 		}
 	}
@@ -74,6 +85,8 @@ public class Player_Stats : MonoBehaviour, Damageable
 		else
 		{
 			curMana = newMana;
+
+			UpdateUI();
 			return true;
 		}
 	}
@@ -89,7 +102,10 @@ public class Player_Stats : MonoBehaviour, Damageable
 		if (hasEnough)
 		{
 			curMana = curMana - howMuch;
+
+			UpdateUI();
 		}
+
 		return hasEnough;
 	}
 
